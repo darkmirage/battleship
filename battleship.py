@@ -97,7 +97,15 @@ class Battleship(object):
 			count += 1
 		return count
 
-battleship = Battleship('4d09222d3729', 'live_board_1')
+battleship = Battleship('4d09222d3729', 'live_board_2')
+
+def shot_it(battleship, x, y):
+	hit = battleship.shoot(x, y)
+	if hit:
+		shot_it(battleship, x-1, y)
+		shot_it(battleship, x+1, y)
+		shot_it(battleship, x, y-1)
+		shot_it(battleship, x, y+1)
 
 while not battleship.ended:
 	x = random.randint(0, 9)
@@ -110,12 +118,7 @@ while not battleship.ended:
 
 	if p > 0.9:
 		print (x, y, p, n)
-		hit = battleship.shoot(x, y)
-		if hit:
-			battleship.shoot(x-1, y)
-			battleship.shoot(x+1, y)
-			battleship.shoot(x, y-1)
-			battleship.shoot(x, y+1)
+		shot_it(battleship, x, y)
 
 
 
